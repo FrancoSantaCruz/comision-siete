@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .views import inicio
+
+from django.urls import include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', inicio, name="inicio"), # http://127.0.0.1:8000/
+    path('noticias/', include('apps.noticias.urls')), #http://127.0.0.1:8000/noticias/una/
 ]
