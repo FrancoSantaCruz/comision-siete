@@ -7,5 +7,10 @@
 </head>
 <body>
     <h1>NUEVA NOTICIA CREADA</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear</button>
+    </form>
 </body>
 </html>

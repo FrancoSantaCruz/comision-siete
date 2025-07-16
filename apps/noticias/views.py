@@ -1,22 +1,65 @@
 from django.shortcuts import render
 from .models import Noticia, Autor, Categoria
 
-# Read
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+
+'''
+    VISTAS BASADAS EN CLASES (CBV)
+'''
+class TodasLasNoticiasView(ListView):
+    model = Noticia
+    template_name = 'todas_noticias.html'
+    context_object_name = 'noticias'
+
+
+class UnaNoticiaView(DetailView):
+    model = Noticia
+    template_name = 'una_noticia.html'
+    context_object_name = 'noticia'
+    pk_url_kwarg = 'noticia_id'
+
+
+class CrearNoticiaView(CreateView):
+    model = Noticia
+    template_name = 'nueva_noticia.html'
+    fields = ['titulo', 'subtitulo', 'contenido']
+    success_url = reverse_lazy('todas_las_noticias')
+
+
+class ActualizarNoticiaView(UpdateView):
+    model = Noticia
+    template_name = 'actualizar_noticia.html'
+    fields = ['titulo', 'subtitulo']
+    success_url = reverse_lazy('todas_las_noticias')
+    pk_url_kwarg = 'noticia_id'
+
+
+class EliminarNoticiaView(DeleteView):
+    model = Noticia
+    template_name = 'eliminar_noticia.html'
+    success_url = reverse_lazy('todas_las_noticias')
+    pk_url_kwarg = 'noticia_id'
+
+'''
+    VISTAS BASADAS EN FUNCIONES (FBV)
+'''
+
 def todas_las_noticias(request):
-    
-    noticias = Noticia.objects.all() # SELECT * FROM Noticia;
-
-    for noticia in noticias:
-        print("*********")
-        print(noticia.titulo)
-        print(noticia.subtitulo)
-        print(noticia.autor.nombre)
-        print("*********")
-
-    return render(request, 'todas_noticias.html')
+    # BUSQUEDA DE INFORMACION GUARDADA
+    noticias = Noticia.objects.all()
 
 
+    #LOGICA REQUERIDA
 
+
+    # CONSTRUCCION DE LA RESPUESTA
+    context = {
+        'noti': noticias
+    }
+
+    return render(request, 'todas_noticias.html', context)
 
 def una_noticia(request): 
 
@@ -27,7 +70,6 @@ def una_noticia(request):
     print(noticia.contenido)
 
     return render(request, 'una_noticia.html')
-
 
 def noticia_categoria(request):
 
@@ -90,3 +132,6 @@ def eliminar_noticia(request):
     print("NOTICIA ELIMINADA CON EXITO")
 
     return render(request, 'eliminar_noticia.html')
+
+
+
