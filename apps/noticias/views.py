@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 # VISTA BASADA EN CLASES (CBV)
 class TodasLasNoticiasView(ListView):
     model = Noticia
-    template_name = "todas_noticias.html"
+    template_name = "noticias/todas_noticias.html"
     context_object_name = "noticias"
 
 # VISTA BASADA EN FUNCIONES (FBV)
@@ -26,7 +26,7 @@ def todas_las_noticias(request):
     context = {"noticias": noticias, "categoria_seleccionada": categoria_param}
 
     # Renderizar el html con el contexto.
-    return render(request, "todas_noticias.html", context)
+    return render(request, "noticias/todas_noticias.html", context)
 
 
 
@@ -35,15 +35,19 @@ def todas_las_noticias(request):
 # VISTA BASADA EN CLASES (CBV)
 class UnaNoticiaView(DetailView):
     model = Noticia
-    template_name = "una_noticia.html"
+    template_name = "noticias/una_noticia.html"
     context_object_name = "noticia"
     pk_url_kwarg = "noticia_id"
 
-# VISTA BASADA EN FUNCIONES (FBV)
+
+
+
+
+# VISTA BASADA EN CLASES (CBV)
 def una_noticia(request, noticia_id):
     noticia = Noticia.objects.get(noticia_id=noticia_id)
     context = {"noticia": noticia}
-    return render(request, "una_noticia.html", context)
+    return render(request, "noticias/una_noticia.html", context)
 
 
 
@@ -52,14 +56,14 @@ def una_noticia(request, noticia_id):
 # VISTA BASADA EN CLASES (CBV)
 class CrearNoticiaView(CreateView):
     model = Noticia
-    template_name = "nueva_noticia.html"
+    template_name = "noticias/nueva_noticia.html"
     fields = ["titulo", "subtitulo", "contenido"]
     success_url = reverse_lazy("todas_las_noticias")
 
 # VISTA BASADA EN FUNCIONES (FBV)
 class ActualizarNoticiaView(UpdateView):
     model = Noticia
-    template_name = "actualizar_noticia.html"
+    template_name = "noticias/actualizar_noticia.html"
     fields = ["titulo", "subtitulo"]
     success_url = reverse_lazy("todas_las_noticias")
     pk_url_kwarg = "noticia_id"
@@ -71,7 +75,7 @@ class ActualizarNoticiaView(UpdateView):
 # VISTA BASADA EN CLASES (CBV)
 class EliminarNoticiaView(DeleteView):
     model = Noticia
-    template_name = "eliminar_noticia.html"
+    template_name = "noticias/eliminar_noticia.html"
     success_url = reverse_lazy("todas_las_noticias")
     pk_url_kwarg = "noticia_id"
 
@@ -83,4 +87,4 @@ def eliminar_noticia(request, noticia_id):
         noticia.delete()
         return redirect("todas_las_noticias_fbv")
 
-    return render(request, "eliminar_noticia.html", {"noticia": noticia})
+    return render(request, "noticias/eliminar_noticia.html", {"noticia": noticia})
