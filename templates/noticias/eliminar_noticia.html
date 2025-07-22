@@ -7,7 +7,12 @@
 </head>
 <body>
     <h1>¿Estás seguro de que queres eliminar esta noticia?</h1>
-    <p>{{object.titulo}}</p>
+    <hr>
+    <p>ID: <small>{{noticia.noticia_id}}</small></p>
+    <p>TITULO: <small>{{noticia.titulo}}</small></p>
+    <p>SUBTITULO: <small>{{noticia.subtitulo}}</small></p>
+    <p>CONTENIDO: <small>{{noticia.contenido}}</small></p>
+    <hr>
 
     <form method="post">
         {% csrf_token %}
