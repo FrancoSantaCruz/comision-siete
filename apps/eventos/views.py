@@ -10,6 +10,21 @@ from django.views.generic import (
 from .models import Evento, Categoria
 from .forms import EventoForm
 
+from django.contrib.auth.decorators import permission_required, user_passes_test
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
+
+# FBV -> Decoradores o Decorators
+# Validar segun el permiso. 
+# Validar por su rol (registrado/admin).
+
+# CBV -> Mixins
+# Validar segun el permiso. 
+
+
+# Decorador Custom
+def es_registrado(user):
+    return user.groups.filter(name="registrado").exists()
 
 
 ### Listar todos los eventos
@@ -48,6 +63,7 @@ class EventosView(ListView):
 
 ### Detalle de un evento
 # FBV
+@user_passes_test(es_registrado, login_url=reverse_lazy('apps.eventos:todos_los_eventos'))
 def detalle_evento(request, evento_id):
     evento = Evento.objects.get(evento_id=evento_id)
     context = {"detalle": evento}
@@ -67,6 +83,7 @@ class DetalleEventoView(DetailView):
 
 ### Creación de un evento
 # FBV
+@permission_required('eventos.add_evento', raise_exception=True)
 def crear_evento(request):
     if request.method == "POST":
         # Obtener la informacion del formulario que me envio el usuario de la página
@@ -85,8 +102,10 @@ def crear_evento(request):
         }
     return render(request, "eventos/crear_evento.html", context)
 
+
 # CBV
-class CrearEventoView(CreateView):
+class CrearEventoView(PermissionRequiredMixin, CreateView):
+    permission_required = 'eventos.add_evento'
     model = Evento
     template_name = "eventos/crear_evento.html"
     form_class = EventoForm

@@ -10,7 +10,7 @@ from .views import (
     eliminar_noticia
 )
 
-#http://127.0.0.1:8000/noticias/
+app_name = "apps.noticias"
 
 urlpatterns = [
     # CBV http://127.0.0.1:8000/noticias/cbv/

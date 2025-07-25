@@ -23,9 +23,12 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
+app_name = "apps.main"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', inicio, name="inicio"),
     path('noticias/', include('apps.noticias.urls')),
     path('eventos/', include('apps.eventos.urls')),
+    path('auth/', include('apps.authentication.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True)

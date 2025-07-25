@@ -7,6 +7,17 @@
 </head>
 <body>
     <h1>PÁGINA DE INICIO</h1>
+    <br>
+
+    {% if request.user.is_authenticated %}
+        <p>Hola, {{request.user.username}}</p>
+        <a href="{% url 'apps.authentication:logout' %}">Cerrar sesión</a>
+    {% else %}
+        <a href="{% url 'apps.authentication:login' %}">Iniciar sesión</a>
+        <a href="{% url 'apps.authentication:register' %}">Registrate</a>
+    {% endif %}
+    <hr>
+    <br><br>
     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi animi aliquam maxime libero culpa minus fugiat consequatur voluptatibus amet magni, adipisci dignissimos ducimus dicta itaque illum ipsum aliquid voluptate atque.</p>
 </body>
 </html>
