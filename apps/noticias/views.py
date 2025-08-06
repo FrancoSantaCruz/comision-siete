@@ -5,6 +5,8 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+from django.core.paginator import Paginator
+
 
 # VISTA BASADA EN CLASES (CBV)
 class TodasLasNoticiasView(ListView):
@@ -17,13 +19,19 @@ def todas_las_noticias(request):
     categoria_param = request.GET.get("categoria", "").strip()
 
     # Buscar todas las noticias desde la base de datos.
-    noticias = Noticia.objects.all()
+    noticias = Noticia.objects.all().order_by('noticia_id')
 
     if categoria_param:
         noticias = noticias.filter(categorias__nombre__icontains=categoria_param)
 
+    paginator = Paginator(noticias, 5)
+    num_pagina = request.GET.get('page')
+    pagina_noticia = paginator.get_page(num_pagina)
+
+    print(dir(pagina_noticia))
+
     # Meterlas en un contexto.
-    context = {"noticias": noticias, "categoria_seleccionada": categoria_param}
+    context = {"noticias": pagina_noticia, "categoria_seleccionada": categoria_param}
 
     # Renderizar el html con el contexto.
     return render(request, "noticias/todas_noticias.html", context)

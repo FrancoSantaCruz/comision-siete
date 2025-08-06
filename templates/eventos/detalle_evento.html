@@ -23,7 +23,7 @@
         <h2>{{detalle.nombre}}</h2>
         <p><strong>{{detalle.inicio}}</strong> | Organizado por: {{detalle.organizador.nombre}}</p>
         <p>{{detalle.descripcion}}</p>
-        <p>Finalizaria el día {{detalle.fin|date:"l d F"}} a las {{detalle.fin|date:"H:i"}}</p>
+        <p>Finalizaria el día {{detalle.fin|date:"l d F"}} a las {{detalle.fin|time:"H:i"}}</p>
     </div>
     
 </body>

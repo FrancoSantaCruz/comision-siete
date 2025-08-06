@@ -23,8 +23,6 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
-app_name = "apps.main"
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', inicio, name="inicio"),

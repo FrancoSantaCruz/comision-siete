@@ -72,3 +72,35 @@ def logout_view(request):
 class LogoutView(auth_views.LogoutView):
     next_page = 'apps.authentication:login'
 
+def prueba(request):
+    usuarios = [
+        {
+        "nombre": "Franco",
+        "edad": 28,
+        "estado_civil": "Soltero",
+        "estudiante": False
+        },
+        {
+        "nombre": "Paula",
+        "edad": 17,
+        "estado_civil": "Viuda",
+        "estudiante": True
+        },
+        {
+        "nombre": "Walter",
+        "edad": 14,
+        "estado_civil": "Casado",
+        "estudiante": False
+        }
+    ]
+
+    lista_frutas = ["banana", "manzana", "pera"]
+
+    num = 3.1462818592012321
+
+    context = {
+        "users": usuarios,
+        "frutas": lista_frutas,
+        "num_decimal": num
+    }
+    return render(request, 'prueba.html', context)

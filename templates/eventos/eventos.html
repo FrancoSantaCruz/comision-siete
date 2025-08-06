@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVENTOS | INICIO</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block titulo %} EVENTOS | INICIO {% endblock titulo %}
+
+{% block contenido %}
     <hr>
     <h1>TODOS LOS EVENTOS</h1>
     <hr>
@@ -22,9 +19,9 @@
     {% for evento in eventos %}
         <hr>
         <h2>{{evento.nombre}}</h2>
+        <p>{{evento.descripcion|truncatechars:80 }}</p>
         <p><strong>{{evento.inicio}}</strong> | Organizador por: {{evento.organizador.nombre}}</p>
 
         <a href="/eventos/{{evento.evento_id}}">VER MÁS</a>
     {% endfor %}
-</body>
-</html>
+{% endblock contenido %}

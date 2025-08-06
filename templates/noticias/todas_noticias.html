@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOTICIAS | INICIO</title>
-</head>
+{% block titulo %} NOTICIAS | INICIO {% endblock titulo %}
 
-<body>
+{% block contenido %}
     <H1>TODAS LAS NOTICIAS DEL PORTAL</H1>
 
     <form method="get" style="margin-left: 50px;">
@@ -31,6 +26,16 @@
         <hr>
     {% endfor %}
 
-</body>
+    <hr>
+    <div>
+        {% if noticias.has_previous %}
+            <p><a href="?page={{noticias.previous_page_number}}">Anterior</a></p>
+        {% endif %}
 
-</html>
+        <span>Página {{noticias.number}} de {{noticias.paginator.num_pages}}</span>
+
+        {% if noticias.has_next %}
+            <p><a href="?page={{noticias.next_page_number}}">Siguiente</a></p>
+        {% endif %}
+    </div>
+{% endblock contenido %}
